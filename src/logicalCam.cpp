@@ -7,14 +7,18 @@
 #include <gazebo/msgs/logical_camera_sensor.pb.h>
 #include <gazebo/sensors/LogicalCameraSensor.hh>
 #include <gazebo/gazebo_client.hh>
-using namespace gazebo;
+#include <geometry_msgs/PoseStamped.h>
 
+using namespace gazebo;
+using namespace std;
+
+geometry_msgs::PoseStamped imageMsg;
 
 void callback(ConstLogicalCameraImagePtr &_msg)
 {
 	std::cout << "MSG LOGICAL CAMERA\n";
-/*
-   osrf_gear::LogicalCameraImage imageMsg;
+
+  //osrf_gear::LogicalCameraImage imageMsg;
   msgs::Vector3d cameraPosition = _msg->pose().position();
   msgs::Quaternion cameraOrientation = _msg->pose().orientation();
   imageMsg.pose.position.x = cameraPosition.x();
@@ -24,7 +28,8 @@ void callback(ConstLogicalCameraImagePtr &_msg)
   imageMsg.pose.orientation.y = cameraOrientation.y();
  imageMsg.pose.orientation.z = cameraOrientation.z();
  imageMsg.pose.orientation.w = cameraOrientation.w();
-  
+ cout << imageMsg.pose.position.x << "\n"; 
+ /*
   for (int i = 0; i < _msg->model_size(); ++i)
   {
   msgs::Vector3d position = _msg->model(i).pose().position();
