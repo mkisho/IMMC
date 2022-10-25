@@ -6,12 +6,13 @@
 #include <gazebo/sensors/SensorsIface.hh>
 #include <gazebo/msgs/logical_camera_sensor.pb.h>
 #include <gazebo/sensors/LogicalCameraSensor.hh>
-
+#include <gazebo/gazebo_client.hh>
 using namespace gazebo;
+
 
 void callback(ConstLogicalCameraImagePtr &_msg)
 {
-	std::cout << "Estou aqui\n";
+	std::cout << "MSG LOGICAL CAMERA\n";
 /*
    osrf_gear::LogicalCameraImage imageMsg;
   msgs::Vector3d cameraPosition = _msg->pose().position();
@@ -44,7 +45,7 @@ void callback(ConstLogicalCameraImagePtr &_msg)
 }
 
 int main(int argc, char **argv)
-{
+{ gazebo::client::setup(argc, argv);
   ros::init(argc, argv, "LogicalCamBridge");
 
   ros::NodeHandle n;
@@ -58,18 +59,17 @@ int main(int argc, char **argv)
   //std::cout << sensorOutput.model_size()<<"\n"; 
   transport::NodePtr node(new transport::Node());
   node->Init();
-  transport::SubscriberPtr sub = node->Subscribe("~/LogCam1/link/logical_camera/models", callback);
-
+  transport::SubscriberPtr sub = node->Subscribe("/gazebo/default/LogCam1/link/logical_camera/models", callback);
 
   int count = 0;
   while (ros::ok())
   {
     std_msgs::String msg;
+    gazebo::common::Time::MSleep(20);
 
+	//ros::spinOnce();
 
-    ros::spinOnce();
-
-    loop_rate.sleep();
+  //  loop_rate.sleep();
   }
 
 
