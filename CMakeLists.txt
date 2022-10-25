@@ -15,7 +15,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  gazebo_msgs
 )
+find_package(gazebo REQUIRED)
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -211,3 +214,12 @@ include_directories(
 catkin_install_python(PROGRAMS scripts/main_robot.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+include_directories(${GAZEBO_INCLUDE_DIRS})
+link_directories(${GAZEBO_LIBRARY_DIRS})
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
+
+add_executable(logCamNode src/logicalCam.cpp)
+target_link_libraries(logCamNode ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+#a
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
+
